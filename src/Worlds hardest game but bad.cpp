@@ -1,3 +1,11 @@
+                                //////////////////////////////////////////
+                                //                                      //
+                                // This is my first EVER C++ project :D //
+                                //                                      //
+                                //    - Carr0t35 (HenryCodesThings)     //
+                                //                                      //
+                                //////////////////////////////////////////
+                                
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "SFML/System.hpp"
@@ -14,6 +22,7 @@
 
 int level1();
 int level2();
+
 int main() {
     level1();
     if (l1beat) {
@@ -186,12 +195,12 @@ int level1() {
                 static_cast<uint8_t>(clearColor.z * 255)
 			);
             window.clear(bg);
-            ImGui::SFML::Render(window);
             window.draw(end);
             window.draw(spawn);
             window.draw(shape);
             window.draw(shape2);
             window.draw(door);
+            ImGui::SFML::Render(window);
             window.display();
         }
         ImGui::SFML::Shutdown();
@@ -249,6 +258,24 @@ int level2() {
                         static_cast<uint8_t>(clearColor.y * 255),
                         static_cast<uint8_t>(clearColor.z * 255)
                     );
+                    // Settings menu
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+                    {
+                        showsettings = !showsettings;
+                        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                    }
+                    ImGui::SFML::Update(window2, deltaClock.restart());
+
+                    if (showsettings)
+                    {
+
+                        ImGuiIO& io = ImGui::GetIO();
+                        io.FontGlobalScale = 2.f;
+                        ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+                        ImGui::Text("Background color");
+                        ImGui::ColorEdit3("clear color", (float*)&clearColor);
+                        ImGui::End();
+                    }
                     window2.clear(bg);
                     ImGui::SFML::Render(window2);
                     window2.display();
