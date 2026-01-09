@@ -11,6 +11,7 @@
 #include <string>
 #include <optional>
 #include <iomanip>
+
 int level1();
 int level2();
 int main() {
@@ -71,12 +72,6 @@ int level1() {
         sf::FloatRect endBounds = end.getGlobalBounds();
 
         sf::Clock deltaClock;
-        ImVec4 clearColor(1.f, 1.f, 1.f, 1.f);
-        sf::Color bg(
-            static_cast<uint8_t>(clearColor.x * 255),
-            static_cast<uint8_t>(clearColor.y * 255),
-            static_cast<uint8_t>(clearColor.z * 255)
-        );
         while (window.isOpen())
         {
             while (std::optional event = window.pollEvent())
@@ -149,6 +144,12 @@ int level1() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
             ImGui::SFML::Update(window, deltaClock.restart());
+            ImVec4 clearColor(1.f, 1.f, 1.f, 1.f);
+            sf::Color bg(
+                static_cast<uint8_t>(clearColor.x * 255),
+                static_cast<uint8_t>(clearColor.y * 255),
+                static_cast<uint8_t>(clearColor.z * 255)
+            );
             if (showsettings)
             {
                 sf::Color bg(
@@ -188,6 +189,7 @@ int level1() {
                 window.close();
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
+
             window.clear(bg);
             ImGui::SFML::Render(window);
             window.draw(end);
@@ -201,9 +203,10 @@ int level1() {
         return 0;
     }
 
+// LEVEL 2 
 int level2() {
         if (l1beat) {
-            sf::RenderWindow window2(sf::VideoMode({ 800, 600 }), "Worlds Hardest Game... but bad 2");
+            sf::RenderWindow window2(sf::VideoMode({ 800, 600 }), "Worlds Hardest Game... but bad (Level 2)");
             if (ImGui::SFML::Init(window2)) {
                 std::cout << "ImGui-SFML initialized successfully." << std::endl;
 			}
@@ -213,9 +216,6 @@ int level2() {
             }
 			window2.setFramerateLimit(60);
             sf::Clock deltaClock;
-
-            ImGui::SFML::Update(window2, deltaClock.restart());
-
 
             window2.setFramerateLimit(60);
             ImVec4 clearColor(1.f, 1.f, 1.f, 1.f);
@@ -233,7 +233,6 @@ int level2() {
                     {
                         window2.close();
                     }
-
                     ImGui::SFML::Update(window2, deltaClock.restart());
                     if (showsettings)
                     {
