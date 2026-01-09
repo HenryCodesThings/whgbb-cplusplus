@@ -19,7 +19,6 @@ int main() {
     if (l1beat) {
         level2();
     }
-
     return 0;
 }
 int level1() {
@@ -32,6 +31,7 @@ int level1() {
             std::cout << "Failed to initialize ImGui-SFML." << std::endl;
             return -1;
         }
+        ImVec4 clearColor(1.f, 1.f, 1.f, 1.f);
         window.setFramerateLimit(60);
 
         // Shape 1 (player)
@@ -144,19 +144,10 @@ int level1() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
             ImGui::SFML::Update(window, deltaClock.restart());
-            ImVec4 clearColor(1.f, 1.f, 1.f, 1.f);
-            sf::Color bg(
-                static_cast<uint8_t>(clearColor.x * 255),
-                static_cast<uint8_t>(clearColor.y * 255),
-                static_cast<uint8_t>(clearColor.z * 255)
-            );
+
             if (showsettings)
             {
-                sf::Color bg(
-                    static_cast<uint8_t>(clearColor.x * 255),
-                    static_cast<uint8_t>(clearColor.y * 255),
-                    static_cast<uint8_t>(clearColor.z * 255)
-                );
+
                 ImGuiIO& io = ImGui::GetIO();
                 io.FontGlobalScale = 2.f;
                 ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
@@ -189,7 +180,11 @@ int level1() {
                 window.close();
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
-
+            sf::Color bg(
+                static_cast<uint8_t>(clearColor.x * 255),
+                static_cast<uint8_t>(clearColor.y * 255),
+                static_cast<uint8_t>(clearColor.z * 255)
+			);
             window.clear(bg);
             ImGui::SFML::Render(window);
             window.draw(end);
@@ -236,18 +231,24 @@ int level2() {
                     ImGui::SFML::Update(window2, deltaClock.restart());
                     if (showsettings)
                     {
-                        sf::Color bg(
-                            static_cast<uint8_t>(clearColor.x * 255),
-                            static_cast<uint8_t>(clearColor.y * 255),
-                            static_cast<uint8_t>(clearColor.z * 255)
-                        );
                         ImGuiIO& io = ImGui::GetIO();
                         io.FontGlobalScale = 2.f;
                         ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
                         ImGui::Text("Background color");
                         ImGui::ColorEdit3("clear color", (float*)&clearColor);
                         ImGui::End();
+                        sf::Color bg(
+                            static_cast<uint8_t>(clearColor.x * 255),
+                            static_cast<uint8_t>(clearColor.y * 255),
+                            static_cast<uint8_t>(clearColor.z * 255)
+						);
+
                     }
+                    bg = sf::Color(
+                        static_cast<uint8_t>(clearColor.x * 255),
+                        static_cast<uint8_t>(clearColor.y * 255),
+                        static_cast<uint8_t>(clearColor.z * 255)
+                    );
                     window2.clear(bg);
                     ImGui::SFML::Render(window2);
                     window2.display();
