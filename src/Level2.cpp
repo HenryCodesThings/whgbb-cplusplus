@@ -16,6 +16,7 @@ bool RunLevel2()
     doorx = 300.f;
     showsettings = false;
     l1beat = false;
+
     sf::RenderWindow window2(sf::VideoMode({ 800,600 }), "Level 2");
     ImGui::SFML::Init(window2);
     sf::Clock deltaClock;
@@ -148,7 +149,7 @@ bool RunLevel2()
         {
             oody += speed;
             ood.setPosition({ oodx, oody });
-            if (oody > 750.f)
+            if (oody > 550.f)
                 direction = "up";
         }
         else if (direction == "up")

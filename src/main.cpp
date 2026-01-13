@@ -8,6 +8,10 @@ int main()
         // Run Level 2
         RunLevel2();
     }
+	else if (RunLevel1() == false)
+    {
+        RunLevel2();
+    }
 
     return 0;
 }

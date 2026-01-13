@@ -12,7 +12,7 @@ bool RunLevel1()
     doorx = 500.f;
     showsettings = false;
     l1beat = false;
-    sf::RenderWindow window1(sf::VideoMode({ 800,600 }), "Level 1");
+    sf::RenderWindow window1(sf::VideoMode({ 800,600 }), "Worlds Hardest Game...but bad. (level 1)");
     ImGui::SFML::Init(window1);
     sf::Clock deltaClock;
 
@@ -79,7 +79,7 @@ bool RunLevel1()
             if (event.type == sf::Event::Closed)
             {
                 window1.close();
-                return 0;
+                return false;
             }
         }
 
