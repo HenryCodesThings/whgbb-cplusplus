@@ -131,8 +131,7 @@ bool RunLevel2()
 
 
         // Settings menu
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-        {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             showsettings = !showsettings;
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
@@ -162,7 +161,6 @@ bool RunLevel2()
 
         if (showsettings)
         {
-
             ImGuiIO& io = ImGui::GetIO();
             io.FontGlobalScale = 2.f;
             ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
@@ -177,7 +175,7 @@ bool RunLevel2()
             door.setPosition({ doorx, 0.f });
         }
 
-        if (shape.getGlobalBounds().intersects(door.getGlobalBounds()))
+        if (shape.getGlobalBounds().intersects(door.getGlobalBounds()) || shape.getGlobalBounds().intersects(ood.getGlobalBounds()))
         {
             x = 10.f; y = 300.f;
             shape.setPosition({ x, y });
@@ -189,6 +187,7 @@ bool RunLevel2()
             y = 300.f;
             l1beat = true;
         }
+
         sf::Color bg(
             static_cast<uint8_t>(clearColor.x * 255),
             static_cast<uint8_t>(clearColor.y * 255),
