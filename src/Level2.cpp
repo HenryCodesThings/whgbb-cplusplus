@@ -137,7 +137,7 @@ bool RunLevel2()
         }
 
         // object of doom
-        int speed = 10;
+        int speed = 25;
         sf::RectangleShape ood({ 50.f, 50.f });
         ood.setFillColor(sf::Color::Blue);
         ood.setOutlineThickness(2.f);
