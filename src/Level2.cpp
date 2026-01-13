@@ -4,7 +4,11 @@
 #include "var.h"
 #include <thread>
 #include <iostream>
-
+#include <string>
+#include <cstdlib>
+float oodx = 400.f;
+float oody = 200.f;
+std::string direction = "down";
 bool RunLevel2()
 {
     x = 10.f;
@@ -64,7 +68,10 @@ bool RunLevel2()
             ImGui::SFML::ProcessEvent(window2, event);
 
             if (event.type == sf::Event::Closed)
+            {
                 window2.close();
+                exit(EXIT_SUCCESS);
+            }
         }
 
         ImGui::SFML::Update(window2, deltaClock.restart());
@@ -129,6 +136,29 @@ bool RunLevel2()
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
 
+        // object of doom
+        int speed = 10;
+        sf::RectangleShape ood({ 50.f, 50.f });
+        ood.setFillColor(sf::Color::Blue);
+        ood.setOutlineThickness(2.f);
+        ood.setOutlineColor(sf::Color::Black);
+        ood.setPosition({ oodx, oody });
+
+        if (direction == "down")
+        {
+            oody += speed;
+            ood.setPosition({ oodx, oody });
+            if (oody > 750.f)
+                direction = "up";
+        }
+        else if (direction == "up")
+        {
+            oody -= speed;
+            ood.setPosition({ oodx, oody });
+            if (oody <= 0.f)
+                direction = "down";
+		}
+
         if (showsettings)
         {
 
@@ -168,9 +198,10 @@ bool RunLevel2()
             return true;
         window2.clear(bg);
         window2.draw(end);
+        window2.draw(ood);
         window2.draw(spawn);
-        window2.draw(shape);
         window2.draw(shape2);
+        window2.draw(shape);
         window2.draw(door);
         ImGui::SFML::Render(window2);
         window2.display();

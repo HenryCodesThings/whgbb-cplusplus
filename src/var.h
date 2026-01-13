@@ -7,3 +7,5 @@ extern float x;
 extern float y;
 extern float doorx;
 extern bool l1beat;
+extern bool window1;
+extern bool window2;

@@ -9,7 +9,7 @@ bool RunLevel1()
 {
     x = 10.f;
     y = 300.f;
-    doorx = 300.f;
+    doorx = 500.f;
     showsettings = false;
     l1beat = false;
     sf::RenderWindow window1(sf::VideoMode({ 800,600 }), "Level 1");
@@ -31,7 +31,7 @@ bool RunLevel1()
     shape2.setFillColor(sf::Color::Red);
     shape2.setOutlineThickness(2.f);
     shape2.setOutlineColor(sf::Color::Black);
-    shape2.setPosition({ 100.f, 100.f });
+    shape2.setPosition({ 295.f, 10.f });
     sf::FloatRect shape2Bounds = shape2.getGlobalBounds();
 
     // Door
@@ -40,6 +40,19 @@ bool RunLevel1()
     door.setOutlineColor(sf::Color::Black);
     door.setPosition({ doorx, -0.f });
     sf::FloatRect doorBounds = door.getGlobalBounds();
+
+    // Corridor
+    sf::RectangleShape wall({ 50.f, 400.f });
+    wall.setOutlineThickness(2.f);
+    wall.setOutlineColor(sf::Color::Black);
+    wall.setPosition({ 240.f, -0.f });
+    sf::FloatRect wallBounds = wall.getGlobalBounds();
+
+    sf::RectangleShape wall2({ 50.f, 400.f });
+    wall2.setOutlineThickness(2.f);
+    wall2.setOutlineColor(sf::Color::Black);
+    wall2.setPosition({ 350.f, -0.f });
+    sf::FloatRect wallBounds2 = wall2.getGlobalBounds();
 
     // Spawn point
     sf::RectangleShape spawn({ 75.f, 75.f });
@@ -64,7 +77,10 @@ bool RunLevel1()
             ImGui::SFML::ProcessEvent(window1, event);
 
             if (event.type == sf::Event::Closed)
+            {
                 window1.close();
+                return 0;
+            }
         }
 
         ImGui::SFML::Update(window1, deltaClock.restart());
@@ -120,6 +136,10 @@ bool RunLevel1()
             y = 550.f;
             shape.setPosition({ x, y });
         }
+         
+
+
+
 
 
         // Settings menu
@@ -152,6 +172,12 @@ bool RunLevel1()
             shape.setPosition({ x, y });
         }
 
+		if (shape.getGlobalBounds().intersects(wall.getGlobalBounds()) or shape.getGlobalBounds().intersects(wall2.getGlobalBounds()))
+        {
+            x = 10.f; y = 300.f;
+            shape.setPosition({ x, y });
+        }
+
         if (shape.getGlobalBounds().intersects(end.getGlobalBounds()))
         {
             l1beat = true;
@@ -166,14 +192,22 @@ bool RunLevel1()
 
         if (l1beat)
             return true;
+        // render shit
         window1.clear(bg);
+        window1.draw(wall);
+        window1.draw(wall2);
         window1.draw(end);
         window1.draw(spawn);
-        window1.draw(shape);
         window1.draw(shape2);
         window1.draw(door);
+        window1.draw(shape);
         ImGui::SFML::Render(window1);
         window1.display();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2))
+        {
+			window1.close();
+            RunLevel2();
+        }
     }
     ImGui::SFML::Shutdown();
     return true;
